@@ -14,7 +14,6 @@ import sun.awt.image.PixelConverter;
 import java.awt.*;
 
 public class CalcTest {
-
     private WebDriver driver;
 
     @BeforeClass
@@ -38,22 +37,26 @@ public class CalcTest {
     public void test() throws InterruptedException {
 
 
-        driver.manage().window().maximize();
-        driver.get("https://github.com/");
-        Thread.sleep(500);
-        driver.findElement(By.xpath("//a[@href='/login']")).click();
-        Thread.sleep(500);
-        driver.findElement(By.id("login_field")).sendKeys("mentos_vist@mail.ru");
-        driver.findElement(By.id("password")).sendKeys("!");
-        driver.findElement(By.name("commit")).click();
-        Thread.sleep(500);
-        driver.findElement(By.xpath("//summary[@aria-label='View profile and more']")).click();
-        Thread.sleep(500);
+        LoginPage loginPage = new LoginPage(driver);
+        StartPage startPage = new StartPage(driver);
 
-        String wb = driver.findElement(By.xpath("//strong[@class='css-truncate-target']")).getText();
-        String name = "mochaches";
-        Assert.assertEquals(wb, name);
-        driver.findElement(By.xpath("//button[@class='dropdown-item dropdown-signout']")).click();
+        startPage.homePage();
+        startPage.signIn();
+
+        HomePage homePage = loginPage.loginAs("mentos_vist@mail.ru", password);
+        Thread.sleep(1500);
+
+        homePage.avatarClick();
+        Thread.sleep(1500);
+        homePage.loginCheck();
+        Thread.sleep(1500);
+//        homePage.signOutPage();
+//        Thread.sleep(1500);
+        homePage.pasteStatus();
+        Thread.sleep(2000);
+
+        homePage.pasteStatus();
+        homePage.enterStatus();
     }
 
 
