@@ -16,6 +16,8 @@ import java.awt.*;
 public class CalcTest {
     private WebDriver driver;
 
+    String password = "";
+
     @BeforeClass
     public static void setupClass() {
         WebDriverManager.chromedriver().setup();
